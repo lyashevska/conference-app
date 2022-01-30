@@ -1,5 +1,7 @@
 package nl.lyashevska.conferenceapp.models;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -14,6 +16,17 @@ public class Speaker {
     private String company;
     private String speaker_bio;
     private byte[] speaker_photo;
+
+    // binary data
+    // large object
+    @Lob
+    @Type(type="org.hibernate.type.BinaryType")
+    public byte[] getSpeaker_photo() {
+        return speaker_photo;
+    }
+    public void setSpeaker_photo(byte[] speaker_photo) {
+        this.speaker_photo = speaker_photo;
+    }
 
     @ManyToMany(mappedBy = "speakers")
     private List<Session> sessions;
