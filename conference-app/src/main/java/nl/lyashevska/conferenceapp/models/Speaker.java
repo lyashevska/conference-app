@@ -1,11 +1,16 @@
 package nl.lyashevska.conferenceapp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity(name="speakers")
+// add ser exceptions
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Speaker {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,6 +34,8 @@ public class Speaker {
     }
 
     @ManyToMany(mappedBy = "speakers")
+    // prevent back serialisation
+    @JsonIgnore
     private List<Session> sessions;
     public List<Session> getSessions() {
         return sessions;
@@ -37,8 +44,6 @@ public class Speaker {
     public void setSessions(List<Session> sessions) {
         this.sessions = sessions;
     }
-
-
 
     public Long getSpeaker_id() {
         return speaker_id;

@@ -1,9 +1,14 @@
 package nl.lyashevska.conferenceapp.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.util.List;
 
 @Entity(name="sessions")
+// add ser exceptions
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Session {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -14,7 +19,7 @@ public class Session {
 
     @ManyToMany
     @JoinTable(
-            name="session_speaker",
+            name="session_speakers",
             joinColumns = @JoinColumn(name="session_id"),
             inverseJoinColumns = @JoinColumn(name = "speaker_id")
     )
